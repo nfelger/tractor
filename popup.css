@@ -1,0 +1,25 @@
+#artists {
+    list-style: none;
+    width: 320px;
+    padding: 0em 1em;
+}
+
+#artists li {
+    font-family: sans;
+    border-top: 1px solid black;
+    margin: 0.5em 0em;
+    padding: 0.25em 0em;
+}
+
+#artists li h2 {
+    color: #fe0046;
+    font-size: 1.2em;
+    margin: 0px;
+    padding: 0px;
+}
+
+#artists li p {
+    font-size: 0.8em;
+    margin: 0px;
+    padding: 0px;
+}

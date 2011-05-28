@@ -1,5 +1,6 @@
 <html>
   <head>
+    <link rel="stylesheet" href="popup.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.js"></script>
     <script src="underscore.js"></script>
     <script src="backbone.js"></script>
@@ -23,7 +24,8 @@
     </ul>
     
     <script type="text/template" id="artist-template">
-      <%= name %> (<%= mbid %>)
+      <h2><%= name %></h2>
+      <p>Musicbrainz: <%= mbid %></p>
     </script>
   </body>
 </html>
