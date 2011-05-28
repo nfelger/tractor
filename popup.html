@@ -1,21 +1,29 @@
-<script>
-var req = new XMLHttpRequest();
-
-function renderText() {
-  var response = req.responseText;
-  document.body.appendChild(document.createElement(response));
-}
-
-window.addEventListener("load", windowLoaded, false);
-  function windowLoaded() {
-    chrome.tabs.getSelected(null, function(tab) {
-      alert('getting ' + "http://localhost:3000/textract?url=" + escape(tab.url));
-      req.open(
-          "GET",
-          "http://localhost:3000/textract?url=" + escape(tab.url),
-          true);
-      req.onload = renderText;
-      req.send();
-    });
-  }
-</script>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <script src="tractor.js"></script>
+    <script>
+      $(window).load(function() {
+        var view = new AppView;
+        var artists = new ArtistCollection;
+        
+        chrome.tabs.getSelected(null, function(tab) {
+          artists.currentTabUrl = tab.url;
+          view.setArtists(artists);
+          view.render();
+        });
+        
+      });
+    </script>
+  </head>
+  <body>
+    <ul id="artists">
+    </ul>
+    
+    <script type="text/template" id="artist-template">
+      <%= name %> (<%= mbid %>)
+    </script>
+  </body>
+</html>
