@@ -1,0 +1,14 @@
+{
+  "name": "Tractor",
+  "version": "0.0.1",
+  "description": "Thing what does artist stuff",
+    "browser_action": {
+    "default_icon": "assets/icon.gif",
+    "default_title": "PULL IN TEH DATAS!",
+    "popup": "popup.html"
+  },
+  "permissions": [
+    "http://*/*",
+    "tabs"
+  ]
+}

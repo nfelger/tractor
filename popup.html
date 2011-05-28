@@ -1,0 +1,21 @@
+<script>
+var req = new XMLHttpRequest();
+
+function renderText() {
+  var response = req.responseText;
+  document.body.appendChild(document.createElement(response));
+}
+
+window.addEventListener("load", windowLoaded, false);
+  function windowLoaded() {
+    chrome.tabs.getSelected(null, function(tab) {
+      alert('getting ' + "http://localhost:3000/textract?url=" + escape(tab.url));
+      req.open(
+          "GET",
+          "http://localhost:3000/textract?url=" + escape(tab.url),
+          true);
+      req.onload = renderText;
+      req.send();
+    });
+  }
+</script>
