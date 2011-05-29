@@ -50,6 +50,13 @@ body
   font-size: 0.8em;
 }
 
+.artist-image img
+{
+  border: 1px solid black;
+  margin-right: 6px;
+  margin-top: 4px;
+}
+
 .songkick-listing
 {
   font-family: 'lucida grande', tahoma, verdana, sans-serif;

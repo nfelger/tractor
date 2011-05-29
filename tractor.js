@@ -53,11 +53,25 @@ window.Timeseries = Backbone.Model.extend({
   },
 
   url: function() {
-    return "http://apib2.semetric.com/artist/musicbrainz:" + escape(this.musicbrainzID) + "/" + escape(this.dataset) + "?token=bbc004e8891211e0ba8f00163e499d92"
+    return "http://apib2.semetric.com/artist/musicbrainz:" + escape(this.musicbrainzID) + "/" + escape(this.dataset) + "?token=bbc004e8891211e0ba8f00163e499d92";
   },
 
   parse: function(response) {
     return response.response;
+  }
+});
+
+window.ArtistImage = Backbone.Model.extend({
+  initialize: function() {
+    _.bindAll(this, "url");
+  },
+
+  url: function() {
+    return "http://ws.audioscrobbler.com/2.0/?format=json&method=artist.getinfo&artist=" + escape(this.artistName) + "&api_key=55452202851c1c703bb26c4f42045b16";
+  },
+
+  parse: function(response) {
+    return response.artist.image[1];
   }
 });
 
@@ -123,6 +137,10 @@ window.ArtistView = Backbone.View.extend({
     return function(timeseries) {element.sparkline(timeseries.get("data"));};
   },
 
+  renderArtistImage: function(element) {
+      return function(artistImage) {element.html("<img src=\"" + artistImage.get("#text") + "\"></img>");};
+  },
+
   render: function(artist) {
     $(this.el).html(this.template(artist.toJSON()));
     
@@ -148,6 +166,11 @@ window.ArtistView = Backbone.View.extend({
     timeseries.dataset = "comments/myspace";
     timeseries.bind("change", this.renderTimeseries(this.$(".sparkline-myspace")));
     timeseries.fetch();
+
+    var artistImage = new ArtistImage;
+    artistImage.artistName = artist.get("name");
+    artistImage.bind("change", this.renderArtistImage(this.$(".artist-image")));
+    artistImage.fetch();    
 
     var calendar = new Calendar;
     calendar.musicbrainzID = artist.get("mbid");
