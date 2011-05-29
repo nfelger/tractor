@@ -36,12 +36,13 @@ window.AppView = Backbone.View.extend({
   },
   
   render: function() {
-    for(var i = 0; i < this.artists.length; i++) {
+    var el = this.el;
+    this.artists.each(function(artist) {
       var artistListItem = $("<li></li>")
       var artistView = new ArtistView;
       artistView.el = artistListItem;
-      artistView.render(this.artists.at(i));
-      this.el.append(artistListItem);
-    }
+      artistView.render(artist);
+      el.append(artistListItem);
+    });
 	}
 });
