@@ -33,6 +33,20 @@ window.Calendar = Backbone.Collection.extend({
   }
 });
 
+window.SoundCloudUser = Backbone.Model.extend({
+  initialize: function() {
+    _.bindAll(this, "url");
+  },
+  
+  url: function() {
+    return "http://api.soundcloud.com/users.json?client_id=fad9326e3e746152a6d761a8f333f42c&q=" + escape(this.artistName);
+  },
+  
+  parse: function(response) {
+    return response[0];
+  }
+});
+
 window.Timeseries = Backbone.Model.extend({
    initialize: function() {
     _.bindAll(this, "url");
@@ -80,8 +94,29 @@ window.SongkickCalendarView = Backbone.View.extend({
 
 window.ArtistView = Backbone.View.extend({
   initialize: function() {
-    _.bindAll(this, "render");
+    _.bindAll(this, "render", "renderSoundCloudPlayer");
     this.template = _.template($('#artist-template').html());
+    this.soundCloudPlayerTemplate = _.template($('#soundCloudPlayerTemplate').html());
+  },
+  
+  renderSoundCloudPlayer: function(element) {
+    var template = this.soundCloudPlayerTemplate;
+    return function(soundCloudUser) {
+      if (soundCloudUser.get("track_count") === 0) {
+        element.html($("<span>No tracks available on SoundCloud.</span>"));
+        return;
+      }
+      var elementId = "soundCloudPlayer" + soundCloudUser.get("id");
+      var soundCloudUrl = soundCloudUser.get("permalink_url");
+      var playerSrc = "http://player.soundcloud.com/player.swf?url=" +
+        escape(soundCloudUrl) +
+        "&enable_api=true&buying=false&sharing=false&show_bpm=false&show_playcount=false" +
+        "&show_user=false&show_artwork=false&show_playcount=false&show_bpm=false&show_comments=false";
+      element.html(template({
+        elementId: elementId,
+        playerSrc: playerSrc
+      }));
+    };
   },
   
   renderTimeseries: function(element) {
@@ -90,6 +125,11 @@ window.ArtistView = Backbone.View.extend({
 
   render: function(artist) {
     $(this.el).html(this.template(artist.toJSON()));
+    
+    var soundCloudUser = new SoundCloudUser;
+    soundCloudUser.artistName = artist.get("name");
+    soundCloudUser.bind("change", this.renderSoundCloudPlayer(this.$(".soundCloudPlayer")));
+    soundCloudUser.fetch();
     
     var timeseries = new Timeseries;
     timeseries.musicbrainzID = artist.get("mbid");
@@ -107,7 +147,7 @@ window.ArtistView = Backbone.View.extend({
     timeseries.musicbrainzID = artist.get("mbid");
     timeseries.dataset = "comments/myspace";
     timeseries.bind("change", this.renderTimeseries(this.$(".sparkline-myspace")));
-    timeseries.fetch();    
+    timeseries.fetch();
 
     var calendar = new Calendar;
     calendar.musicbrainzID = artist.get("mbid");

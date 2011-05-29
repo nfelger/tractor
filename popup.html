@@ -1,11 +1,12 @@
 <html>
   <head>
     <link rel="stylesheet" href="popup.css" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.js"></script>
+    <script src="jquery.js"></script>
     <script src="jquery.sparkline.js"></script>
     <script src="underscore.js"></script>
     <script src="backbone.js"></script>
     <script src="tractor.js"></script>
+    <script type="text/javascript" src="soundcloud.player.api.js"></script>
     <script>
       $(window).load(function() {
         var view = new AppView;
@@ -22,16 +23,18 @@
   <body>
     <ul id="artists">
     </ul>
-
+    
     <script type="text/template" id="artist-template">
       <h2><%= name %></h2>
+      <div class="soundCloudPlayer">Loading SoundCloud player...</div>
       <h3>Youtube Plays</h3>
-      <p><span class="sparkline-youtube">Loading chart data...</span></p>
+      <div><span class="sparkline-youtube">Loading chart data...</span></div>
       <h3>Twitter Followers</h3>
-      <p><span class="sparkline-twitter">Loading chart data...</span></p>
+      <div><span class="sparkline-twitter">Loading chart data...</span></div>
       <h3>Is Myspace Dead Yet?</h3>
-      <p><span class="sparkline-myspace">Loading chart data...</span></p>
+      <div><span class="sparkline-myspace">Loading chart data...</span></div>
       <h3>Upcoming Events</h3>
+      <div><span class="sparkline">Loading chart data...</span></div>
       <table class="songkick-listing"></table>
     </script>
     
@@ -57,6 +60,14 @@
           </a>
         </td>
       </tr>
+    </script>
+    
+    <script type="text/template" id="soundCloudPlayerTemplate">
+      <object height="81" width="100%" id="<%= elementId %>" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
+        <param name="movie" value="<%= playerSrc %>"></param>
+        <param name="allowscriptaccess" value="always"></param>
+        <embed allowscriptaccess="always" height="81" src="<%= playerSrc %>" type="application/x-shockwave-flash" width="100%" name="yourPlayerId"></embed>
+      </object>
     </script>
   </body>
 </html>
