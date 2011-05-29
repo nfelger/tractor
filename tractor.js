@@ -51,7 +51,8 @@ window.SongkickCalendarView = Backbone.View.extend({
         dayOfMonth: date.getDate(),
         month: window.months[date.getMonth()],
         venueOrFestivalName: venueOrFestivalName,
-        city: event.get("location").city
+        city: event.get("location").city,
+        songkickUrl: event.get("uri")
       });
     });
     this.el.append($(html));

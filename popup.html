@@ -32,19 +32,23 @@
     <script type="text/template" id="songkick-listing-item-template">
       <tr>
         <td class="calendar">
-          <span class="day">
-            <%= dayOfWeek %>
-          </span>
-          <span class="day-of-month">
-            <%= dayOfMonth %>
-          </span>
-          <span class="month">
-            <%= month %>
-          </span>
+          <a href="<%= songkickUrl %>" target=_blank>
+            <span class="day">
+              <%= dayOfWeek %>
+            </span>
+            <span class="day-of-month">
+              <%= dayOfMonth %>
+            </span>
+            <span class="month">
+              <%= month %>
+            </span>
+          </a>
         </td>
         <td class="location">
-          <strong><%= venueOrFestivalName %></strong>
-          <%= city %>
+          <a href="<%= songkickUrl %>" target=_blank>
+            <strong><%= venueOrFestivalName %></strong>
+            <%= city %>
+          </a>
         </td>
       </tr>
     </script>

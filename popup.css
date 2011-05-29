@@ -8,6 +8,11 @@
   border: none;
 }
 
+a:hover
+{
+  text-decoration: underline;
+}
+
 body
 {
   background-image: url(/assets/texture.png);
@@ -67,6 +72,10 @@ body
   color: inherit;
 }
 
+.calendar a:hover {
+  text-decoration: none;
+}
+
 .calendar span
 {
   text-align: center;
@@ -111,4 +120,8 @@ body
 .songkick-listing .location
 {
   font-size: 1.2em;
+}
+
+.songkick-listing a {
+  color: black;
 }
