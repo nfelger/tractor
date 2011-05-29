@@ -39,7 +39,7 @@ window.Timeseries = Backbone.Model.extend({
   },
 
   url: function() {
-    return "http://apib2.semetric.com/artist/musicbrainz:" + escape(this.musicbrainzID) + "/plays/youtube?token=bbc004e8891211e0ba8f00163e499d92"
+    return "http://apib2.semetric.com/artist/musicbrainz:" + escape(this.musicbrainzID) + "/" + escape(this.dataset) + "?token=bbc004e8891211e0ba8f00163e499d92"
   },
 
   parse: function(response) {
@@ -80,12 +80,12 @@ window.SongkickCalendarView = Backbone.View.extend({
 
 window.ArtistView = Backbone.View.extend({
   initialize: function() {
-    _.bindAll(this, "render", "renderTimeseries");
+    _.bindAll(this, "render");
     this.template = _.template($('#artist-template').html());
   },
   
-  renderTimeseries: function(timeseries) {
-    this.$('.sparkline').sparkline(timeseries.get("data"));
+  renderTimeseries: function(element) {
+    return function(timeseries) {element.sparkline(timeseries.get("data"));};
   },
 
   render: function(artist) {
@@ -93,8 +93,21 @@ window.ArtistView = Backbone.View.extend({
     
     var timeseries = new Timeseries;
     timeseries.musicbrainzID = artist.get("mbid");
-    timeseries.bind("change", this.renderTimeseries);
+    timeseries.dataset = "plays/youtube";
+    timeseries.bind("change", this.renderTimeseries(this.$(".sparkline-youtube")));
     timeseries.fetch();
+
+    timeseries = new Timeseries;
+    timeseries.musicbrainzID = artist.get("mbid");
+    timeseries.dataset = "fans/twitter";
+    timeseries.bind("change", this.renderTimeseries(this.$(".sparkline-twitter")));
+    timeseries.fetch();
+
+    timeseries = new Timeseries;
+    timeseries.musicbrainzID = artist.get("mbid");
+    timeseries.dataset = "comments/myspace";
+    timeseries.bind("change", this.renderTimeseries(this.$(".sparkline-myspace")));
+    timeseries.fetch();    
 
     var calendar = new Calendar;
     calendar.musicbrainzID = artist.get("mbid");
