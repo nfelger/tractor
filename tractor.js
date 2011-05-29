@@ -37,28 +37,24 @@ window.Calendar = Backbone.Collection.extend({
 window.SongkickCalendarView = Backbone.View.extend({
   initialize: function() {
     _.bindAll(this, "setCalendar", "render");
+    this.template = _.template($('#songkick-listing-item-template').html());
   },
 
   render: function() {
-    var el = this.el;
+    var template = this.template;
+    var html = "";
     this.calendar.each(function(event) {
+      var venueOrFestivalName = (event.get("type") === "Festival" ? event.get("displayName") : event.get("venue").displayName)
       var date = new Date(event.get("start").date);
-      var venueOrFestivalName = (event.get("type")   === "Festival" ? event.get("displayName") : event.get("venue").displayName)
-      var calendarListItem = $(
-        "<tr>\n<td class=\"calendar\">\n<span class=\"day\">" +
-          window.daysOfTheWeek[date.getDay()] +
-          "</span>\n<span class=\"day-of-month\">" +
-          date.getDate() +
-          "</span><span class=\"month\">" +
-          window.months[date.getMonth()] +
-          "</span>\n</td>\n<td class=\"location\">\n<strong>" +
-          venueOrFestivalName +
-          "</strong>" +
-          event.get("location").city +
-          "</td>\n</tr>"
-      );
-      el.append(calendarListItem);
+      html = html + template({
+        dayOfWeek: window.daysOfTheWeek[date.getDay()],
+        dayOfMonth: date.getDate(),
+        month: window.months[date.getMonth()],
+        venueOrFestivalName: venueOrFestivalName,
+        city: event.get("location").city
+      });
     });
+    this.el.append($(html));
   },
 
   setCalendar: function(calendar) {

@@ -28,5 +28,25 @@
       <p>Musicbrainz: <%= mbid %></p>
       <table class="songkick-listing"></table>
     </script>
+    
+    <script type="text/template" id="songkick-listing-item-template">
+      <tr>
+        <td class="calendar">
+          <span class="day">
+            <%= dayOfWeek %>
+          </span>
+          <span class="day-of-month">
+            <%= dayOfMonth %>
+          </span>
+          <span class="month">
+            <%= month %>
+          </span>
+        </td>
+        <td class="location">
+          <strong><%= venueOrFestivalName %></strong>
+          <%= city %>
+        </td>
+      </tr>
+    </script>
   </body>
 </html>
