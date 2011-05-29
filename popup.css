@@ -17,27 +17,31 @@ body
 {
   background-image: url(/assets/texture.png);
   background-repeat: repeat;
+  font-family: Helvetica, Arial, freeSans, sans-serif;
+  width: 350px;
 }
 
-#artists {
-    width: 320px;
-    padding: 0em 1em;
+#artists
+{
+  padding: 0em 1em;
 }
 
-#artists li {
-    font-family: Helvetica, Arial, freeSans, sans-serif;
-    border-top: 1px solid black;
-    margin: 0.5em 0em;
-    padding: 0.25em 0em;
+#artists li
+{
+  border-top: 2px solid #aaa;
+  margin: 0.5em 0em;
+  padding: 0.25em 0.25em;
 }
 
-#artists li h2 {
-    color: #fe0046;
-    font-size: 1.2em;
+#artists h2
+{
+  color: #fe0046;
+  font-size: 1.2em;
 }
 
-#artists li p {
-    font-size: 0.8em;
+#artists p
+{
+  font-size: 0.8em;
 }
 
 .songkick-listing
@@ -47,14 +51,9 @@ body
   line-height: 1.2;
 }
 
-.songkick-listing tr
-{
-  padding-top: 10px;
-  padding-bottom: 12px;
-}
-
 .songkick-listing td
 {
+  padding-top: 10px;
   padding-left: 10px;
   vertical-align: top;
   line-height: 1.2;
