@@ -1,5 +1,20 @@
+*
+{
+  list-style-type: none;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  border: none;
+}
+
+body
+{
+  background-image: url(/assets/texture.png);
+  background-repeat: repeat;
+}
+
 #artists {
-    list-style: none;
     width: 320px;
     padding: 0em 1em;
 }
@@ -14,12 +29,86 @@
 #artists li h2 {
     color: #fe0046;
     font-size: 1.2em;
-    margin: 0px;
-    padding: 0px;
 }
 
 #artists li p {
     font-size: 0.8em;
-    margin: 0px;
-    padding: 0px;
+}
+
+.songkick-listing
+{
+  font-family: 'lucida grande', tahoma, verdana, sans-serif;
+  font-size: 0.625em;
+  line-height: 1.2;
+}
+
+.songkick-listing tr
+{
+  padding-top: 10px;
+  padding-bottom: 12px;
+}
+
+.songkick-listing td
+{
+  padding-left: 10px;
+  vertical-align: top;
+  line-height: 1.2;
+}
+
+.songkick-listing strong
+{
+  display: block;
+}
+
+.calendar
+{
+  display: block;
+  width: 31px;
+  color: inherit;
+}
+
+.calendar span
+{
+  text-align: center;
+  display: block;
+  text-transform: uppercase;
+}
+
+.day
+{
+  color: white;
+  background-color: #a80046;
+  border: 1px solid #5f000a;
+  -moz-border-top-left-radius: 2px;
+  -moz-border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+.month,
+.day
+{
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.day-of-month
+{
+  font-family: helvetica, sans-serif;
+  font-weight: 600;
+  background-color: white;
+  border: 1px solid #b1b1b1;
+  letter-spacing: 1px;
+  font-size: 1.545em;
+  color: #666;
+}
+
+.month
+{
+  padding-top: 1px;
+}
+
+.songkick-listing .location
+{
+  font-size: 1.2em;
 }

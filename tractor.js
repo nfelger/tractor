@@ -1,3 +1,7 @@
+window.daysOfTheWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+window.months = ['Jan','Feb','Mar','Apr','May','Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'];
+
+
 window.Artist = Backbone.Model.extend({});
 
 window.ArtistCollection = Backbone.Collection.extend({
@@ -38,7 +42,21 @@ window.SongkickCalendarView = Backbone.View.extend({
   render: function() {
     var el = this.el;
     this.calendar.each(function(event) {
-      var calendarListItem = $("<li>" + event.attributes.displayName  + "</li>")
+      var date = new Date(event.get("start").date);
+      var venueOrFestivalName = (event.get("type")   === "Festival" ? event.get("displayName") : event.get("venue").displayName)
+      var calendarListItem = $(
+        "<tr>\n<td class=\"calendar\">\n<span class=\"day\">" +
+          window.daysOfTheWeek[date.getDay()] +
+          "</span>\n<span class=\"day-of-month\">" +
+          date.getDate() +
+          "</span><span class=\"month\">" +
+          window.months[date.getMonth()] +
+          "</span>\n</td>\n<td class=\"location\">\n<strong>" +
+          venueOrFestivalName +
+          "</strong>" +
+          event.get("location").city +
+          "</td>\n</tr>"
+      );
       el.append(calendarListItem);
     });
   },
@@ -63,7 +81,7 @@ window.ArtistView = Backbone.View.extend({
     calendar.musicbrainzID = artist.attributes.mbid;
     
     var songkickCalendarView = new SongkickCalendarView;
-    songkickCalendarView.el = this.$('.calendar');
+    songkickCalendarView.el = this.$('.songkick-listing');
     songkickCalendarView.setCalendar(calendar);
   }
 });
