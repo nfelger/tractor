@@ -39,6 +39,12 @@ body
   font-size: 1.2em;
 }
 
+#artists h3
+{
+  font-size: 1em;
+  padding: 0.5em 0em 0.25em;
+}
+
 #artists div
 {
   font-size: 0.8em;
