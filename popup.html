@@ -2,6 +2,7 @@
   <head>
     <link rel="stylesheet" href="popup.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.js"></script>
+    <script src="jquery.sparkline.js"></script>
     <script src="underscore.js"></script>
     <script src="backbone.js"></script>
     <script src="tractor.js"></script>
@@ -15,7 +16,6 @@
           view.setArtists(artists);
           view.render();
         });
-        
       });
     </script>
   </head>
@@ -25,7 +25,7 @@
 
     <script type="text/template" id="artist-template">
       <h2><%= name %></h2>
-      <p>Musicbrainz: <%= mbid %></p>
+      <p><span class="sparkline">Loading chart data...</span></p>
       <table class="songkick-listing"></table>
     </script>
     

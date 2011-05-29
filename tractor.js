@@ -1,7 +1,6 @@
 window.daysOfTheWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 window.months = ['Jan','Feb','Mar','Apr','May','Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'];
 
-
 window.Artist = Backbone.Model.extend({});
 
 window.ArtistCollection = Backbone.Collection.extend({
@@ -31,6 +30,20 @@ window.Calendar = Backbone.Collection.extend({
 
   parse: function(response) {
     return response.resultsPage.results.event;
+  }
+});
+
+window.Timeseries = Backbone.Model.extend({
+   initialize: function() {
+    _.bindAll(this, "url");
+  },
+
+  url: function() {
+    return "http://apib2.semetric.com/artist/musicbrainz:" + escape(this.musicbrainzID) + "/plays/youtube?token=bbc004e8891211e0ba8f00163e499d92"
+  },
+
+  parse: function(response) {
+    return response.response;
   }
 });
 
@@ -67,15 +80,24 @@ window.SongkickCalendarView = Backbone.View.extend({
 
 window.ArtistView = Backbone.View.extend({
   initialize: function() {
-    _.bindAll(this, "render");
+    _.bindAll(this, "render", "renderTimeseries");
     this.template = _.template($('#artist-template').html());
   },
   
+  renderTimeseries: function(timeseries) {
+    this.$('.sparkline').sparkline(timeseries.get("data"));
+  },
+
   render: function(artist) {
     $(this.el).html(this.template(artist.toJSON()));
     
+    var timeseries = new Timeseries;
+    timeseries.musicbrainzID = artist.get("mbid");
+    timeseries.bind("change", this.renderTimeseries);
+    timeseries.fetch();
+
     var calendar = new Calendar;
-    calendar.musicbrainzID = artist.attributes.mbid;
+    calendar.musicbrainzID = artist.get("mbid");
     
     var songkickCalendarView = new SongkickCalendarView;
     songkickCalendarView.el = this.$('.songkick-listing');
