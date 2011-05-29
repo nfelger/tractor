@@ -1,13 +1,13 @@
 window.Artist = Backbone.Model.extend({});
 
 window.ArtistCollection = Backbone.Collection.extend({
-	model: Artist,
+  model: Artist,
 
-	initialize: function() {
+  initialize: function() {
     _.bindAll(this, "url");
-	},
+  },
 
-	url: function() {
+  url: function() {
     return "http://localhost:3000/textract?url=" + escape(this.currentTabUrl);
   }
 });
@@ -27,7 +27,7 @@ window.AppView = Backbone.View.extend({
   initialize: function() {
     _.bindAll(this, "setArtists", "render");
     this.el = $('#artists');
-	},
+  },
   
   setArtists: function(artists) {
     this.artists = artists;
